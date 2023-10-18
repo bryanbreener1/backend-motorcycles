@@ -1,6 +1,7 @@
 import { authenticate, syncUp } from "./config/database/database.js"
 import { envs } from "./config/enviroments/enviroments.js"
 import app from "./app.js"
+import {initModel} from './config/database/relations.js'
 
 async function main(){
     try {

@@ -17,7 +17,7 @@ export async function authenticate(){
 export async function syncUp(){
     try {
         await sequelize.sync()
-        console.log('conection has been stablished successfully');
+        console.log('sincronization has been stablished successfully');
     } catch (error) {
         throw new Error('sincronization error: ', error)
     }

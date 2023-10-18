@@ -6,6 +6,7 @@ import {
     updateRepair,
     deleteRepair
 } from './repairs.controller.js'
+import { statusPendingExist } from "./repairs.middleware.js";
 
 export const router = Router()
 
@@ -16,6 +17,6 @@ router
 
 router
     .route('/:id')
-    .get(findOneRepair)
-    .patch(updateRepair)
-    .delete(deleteRepair)
+    .get(statusPendingExist,findOneRepair)
+    .patch(statusPendingExist,updateRepair)
+    .delete(statusPendingExist,deleteRepair)

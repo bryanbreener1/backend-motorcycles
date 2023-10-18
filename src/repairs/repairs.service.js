@@ -1,5 +1,6 @@
 import Repairs from "./repairs.model.js"
-export class RepairsService{
+
+export class RepairService{
     async findAllRepairs (){
         return await Repairs.findAll() 
     }
@@ -13,10 +14,10 @@ export class RepairsService{
             }
         })
     }
-    async updateRepair(repair, data){
-        return await repair.update(data)
+    async updateRepair(repair){
+        return await repair.update({status:'completed'})
     }
     async deleteRepair(repair){
-        return await repair.update({status: 'completed'})
+        return await repair.update({status: 'cancelled'})
     }
 }

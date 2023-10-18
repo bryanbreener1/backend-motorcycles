@@ -1,5 +1,6 @@
 import  DataTypes, { ENUM }  from "sequelize";
 import sequelize from "../config/database/database.js";
+import { encryptedPassword } from "../config/plugins/encrypPassword.plugin.js";
 
 const User = sequelize.define('user',{
     id:{
@@ -23,7 +24,7 @@ const User = sequelize.define('user',{
         allowNull: false
     },
     role:{
-        type: ENUM('client', 'worker', 'admin', 'mmanager'),
+        type: ENUM('client', 'employee'),
         allowNull: false
     },
     status:{
@@ -31,7 +32,12 @@ const User = sequelize.define('user',{
         allowNull:false,
         defaultValue: true
     }
-
+},{
+    hooks:{
+        beforeCreate: async(user) => {
+            user.password = await encryptedPassword(user.password)
+        }
+    }
 })
 
 export default User
