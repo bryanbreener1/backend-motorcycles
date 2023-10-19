@@ -49,3 +49,12 @@ const userService = new UserService
     req.sessionUser = user
     next()
  })
+
+ export const restrictTo = (...roles) => {
+    return (req, res, next) => {
+        if(!roles.includes(req.sessionUser.role)){
+          return next(new AppError('this user does not have the right role to do this actions', 403))
+        }
+        next();
+      }
+ }

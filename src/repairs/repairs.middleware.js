@@ -11,7 +11,7 @@ export const statusPendingExist = async(req,res,next)=>{
         return next(new AppError(`service with id: ${id} not found`))
     }
     if(repair.status !== 'pending'){
-        return next(new AppError(`service with id: ${id} exist but its status is not pending`))
+        return next(new AppError(`you can not update or cancell services with status not pending`))
     }
     req.repair = repair
     next()

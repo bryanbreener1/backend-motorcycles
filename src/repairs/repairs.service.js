@@ -1,8 +1,22 @@
 import Repairs from "./repairs.model.js"
+import User from "../users/users.model.js"
+import { Op } from "sequelize"
+
 
 export class RepairService{
-    async findAllRepairs (){
-        return await Repairs.findAll() 
+    async findAllRepairsWithAllData (){
+        return await Repairs.findAll({
+            where:{
+                status:{
+                    [Op.in]: ['completed', 'pending']
+                }
+            },
+            include: {
+                model:User,
+                as: 'user',
+                attributes: ['name']
+            }
+        }) 
     }
     async createRepair(data){
         return await Repairs.create(data)

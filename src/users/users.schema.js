@@ -5,12 +5,19 @@ export const userSchema = z.object({
     name: z.string().min(3).max(99),
     email: z.string().email(),
     password: z.string().min(8),
-    role: z.enum(['client', 'employee'])
+    role: z.enum(['client', 'employee']),
+    status: z.enum(['available', 'disabled']).optional()
 })
 
-const loginUserSchema = z.object({
+export const loginUserSchema = z.object({
     email: z.string().email({ message: 'Invalid email'}),
     password: z.string().min(8, { message: 'Password is too short' }),
+})
+
+
+export const UpdateUserSchema = z.object({
+    name: z.string().min(3).max(99),
+    email: z.string().email(),
 })
 
 export function validateUser(data){
@@ -34,10 +41,20 @@ export function validateUser(data){
         errorMessages,
         usersData
     }
- }
+}
+
+export function validateUpdate(data){
+    const result = UpdateUserSchema.partial().safeParse(data)
+    const {hasError, errorMessages, data: userUpdateData} = extractValidationData(result)
+    return {
+        hasError,
+        errorMessages,
+        userUpdateData
+    }
+}
 
 
-export const validateLogin = data => {
+export function validateLogin(data){
     const result = loginUserSchema.safeParse(data)
   
     const {

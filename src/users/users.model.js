@@ -28,9 +28,9 @@ const User = sequelize.define('user',{
         allowNull: false
     },
     status:{
-        type:DataTypes.BOOLEAN,
+        type:ENUM('available', 'disabled'),
         allowNull:false,
-        defaultValue: true
+        defaultValue: 'available'
     }
 },{
     hooks:{

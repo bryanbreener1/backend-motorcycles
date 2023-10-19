@@ -5,8 +5,12 @@ export class UserService{
     async findAllUsers(){
         return await User.findAll({
             where:{
-                status: true,
+                status: 'available'
+            },
+            attributes:{
+                exclude:['password']
             }
+
         })
     }
 
@@ -18,7 +22,10 @@ export class UserService{
         return await User.findOne({
             where:{
                 id,
-                status: true
+                status: 'available'
+            },
+            attributes:{
+                exclude:['password']
             }
         })
     }
@@ -28,15 +35,15 @@ export class UserService{
     }
 
     async deleteUser(user){
-        return await user.update({status: false})
+        return await user.update({status: 'disabled'})
     }
 
     async findOneUserByEmail(email){
         return await User.findOne({
             where:{
                 email,
-                status:true
-            }
+                status:'available'
+            },
         })
     }
 }

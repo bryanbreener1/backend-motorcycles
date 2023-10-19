@@ -7,7 +7,7 @@ const repairService = new RepairService()
 
 export const findAllRepairs = catchAsync(async(req, res, next) => {
 
-    const repairs = await repairService.findAllRepairs()
+    const repairs = await repairService.findAllRepairsWithAllData()
     return res.json(repairs)
 
 })
@@ -27,23 +27,8 @@ export const createRepair = catchAsync(async(req, res, next) => {
 
 
 export const findOneRepair = catchAsync(async(req, res, next) => {
-    const {id} = req.params
-    const repair = await repairService.findOneRepair(id)
-    if(!repair){
-        return res.status(404).json({
-            status: 'error',
-            message: `repair with id ${id} not found`
-        })
-    }
-    if(repair && repair.status == 'pending'){
-        return res.json(repair)
-    }
-    else if(repair.status !== 'pending'){
-        return res.status(404).json({
-            status: 'error',
-            message: `repair with id ${id} is not in pending status`
-        })
-    }
+    const {repair} = req
+    return res.json(repair)
 })
 
 export const updateRepair = catchAsync(async(req, res, next) =>{
@@ -59,4 +44,5 @@ export const deleteRepair = catchAsync(async(req, res, next) =>{
     const {repair} = req
     await repairService.deleteRepair(repair)
     res.status(204).json(null)
+    
 })

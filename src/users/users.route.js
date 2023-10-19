@@ -11,12 +11,12 @@ import { userExist } from "./users.middleware.js";
 
 export const router = Router()
 
-router.get('/',protect , findAllUsers)  
+router.get('/',protect, findAllUsers)  
 router.post('/', register)
 router.post('/login', login)
 
 router
     .route('/:id')
     .get(userExist,findOneUser)
-    .patch(userExist,updateUser)
-    .delete(userExist,deleteUser)
+    .patch(protect,userExist,updateUser)
+    .delete(protect,userExist,deleteUser)
